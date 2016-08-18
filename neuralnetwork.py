@@ -1,0 +1,140 @@
+from __future__ import division
+import numpy as np
+
+def tanh(x):
+    return np.tanh(x)
+
+def tanh_deriv(x):
+    return 1.0 - np.tanh(x)**2
+
+def logistic(x):
+    return 1/(1 + np.exp(-x))
+
+def logistic_derivative(x):
+    return logistic(x)*(1-logistic(x))
+
+def ReLU(x):
+    return x * (x > 0)
+
+def _scale_to_binary(e, minV, maxV):
+    result = ((e-minV)/(maxV-minV))*(1-0)+0
+    return result
+
+def rescale_from_binary(e, minV, maxV):
+    result = e*(maxV-minV) + minV
+    return result
+
+
+class NeuralNetwork:
+    def __init__(self, layers, activation='tanh'):
+        """
+        :param layers: A list containing the number of units in each layer.
+        Should be at least two values
+        :param activation: The activation function to be used. Can be
+        "logistic" or "tanh"
+        """
+        np.random.seed(0)
+        if activation == 'logistic':
+            self.activation = logistic
+            self.activation_deriv = logistic_derivative
+        elif activation == 'tanh':
+            self.activation = tanh
+            self.activation_deriv = tanh_deriv
+
+        self.weights = []
+        for i in range(1, len(layers) - 1):
+            self.weights.append((2*np.random.random((layers[i - 1] + 1, layers[i]
+                                + 1))-1)*2.0)
+
+
+
+        self.weights.append((2*np.random.random((layers[i] + 1, layers[i +
+                            1]))-1)*2.0)
+
+        #print self.weights
+
+    def fit(self, X, y, learning_rate=2, epochs=50000):
+        #Set initial temperature to be 27
+        X = np.atleast_2d(X)
+        #temp = np.full([X.shape[0], X.shape[1]+1],27)#Initial temperature is 27
+        temp = np.ones([X.shape[0], X.shape[1]+1])
+        temp[:, 0:-1] = X  # adding the bias unit to the input layer
+        X = temp #Create a new X but with an extra bias item
+        y = np.array(y)
+
+        for k in range(epochs):
+            i = np.random.randint(X.shape[0])
+            a = [X[i]]
+
+            for l in range(len(self.weights)):
+                a.append(self.activation(np.dot(a[l], self.weights[l])))
+            error = y[i] - a[-1]
+            deltas = [error * self.activation_deriv(a[-1])]
+
+            for l in range(len(a) - 2, 0, -1): # we need to begin at the second to last layer
+                deltas.append(deltas[-1].dot(self.weights[l].T)*self.activation_deriv(a[l]))
+            deltas.reverse()
+            for i in range(len(self.weights)):
+                layer = np.atleast_2d(a[i])
+                delta = np.atleast_2d(deltas[i])
+                self.weights[i] += learning_rate * layer.T.dot(delta)
+        
+        #print "Printing a and weights"
+        #print a
+        #print self.weights
+        #print "Done printing"
+
+    def predict(self, x):
+        x = np.array(x)
+        #temp = np.full([x.shape[0]+1],27)
+        temp = np.ones(x.shape[0]+1)
+        temp[0:-1] = x
+        a = temp
+        #print a
+        for l in range(0, len(self.weights)):
+            #print a
+            a = self.activation(np.dot(a, self.weights[l]))
+        return a
+
+
+nn = NeuralNetwork([2,4,1], 'tanh')
+
+minValue = 0
+maxValue = 100
+
+x_array = [[20, 24], [22, 23], [21, 23], [19, 22],[24, 27],[25, 29],[23, 25],[22, 24],[27, 29]]
+y_array = [22, 23, 22, 20, 25, 26, 27, 24, 23, 28]
+predict_array = [[19, 20], [26, 28], [24, 26],[21,24]]
+
+scaled_x_array = []
+scaled_y_array = []
+scaled_predict_array = []
+
+for item in x_array:
+    temp = []
+    for i in item:
+        temp.append(_scale_to_binary(i, minValue, maxValue))
+    scaled_x_array.append(temp)
+
+for item in y_array:
+    scaled_y_array.append(_scale_to_binary(item, minValue, maxValue))
+
+for item in predict_array:
+    temp = []
+    for i in item:
+        temp.append(_scale_to_binary(i, minValue, maxValue))
+    scaled_predict_array.append(temp)
+
+#print scaled_y_array
+#print scaled_x_array
+#print scaled_predict_array
+
+X = np.array(scaled_x_array)#Training data
+y = np.array(scaled_y_array)#Testing data
+
+nn.fit(X, y)
+for i in scaled_predict_array:
+    result = nn.predict(i)
+    #print result
+    result= rescale_from_binary(result, minValue, maxValue)
+    print(i,result)
