@@ -106,6 +106,13 @@ x_array = [[20, 24], [22, 23], [21, 23], [19, 22],[24, 27],[25, 29],[23, 25],[22
 y_array = [22, 23, 22, 20, 25, 26, 27, 24, 23, 28]
 predict_array = [[19, 20], [26, 28], [24, 26],[21,24]]
 
+print "Network Input:"
+print x_array
+
+print "Network Output:"
+print y_array
+
+
 scaled_x_array = []
 scaled_y_array = []
 scaled_predict_array = []
@@ -133,8 +140,15 @@ X = np.array(scaled_x_array)#Training data
 y = np.array(scaled_y_array)#Testing data
 
 nn.fit(X, y)
+count = 0
 for i in scaled_predict_array:
     result = nn.predict(i)
     #print result
     result= rescale_from_binary(result, minValue, maxValue)
-    print(i,result)
+
+    print "\nInput values:"
+    print predict_array[count]
+    print "Prediction:"
+    print result[0]
+
+    count +=1

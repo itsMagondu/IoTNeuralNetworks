@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import time
 
 class KalmanFilter:
-	def __init__(self,base_value=24,iterations=50,initial_guess=20.0,posteri_estimate=4.0,plot=False):
+	def __init__(self,base_value=24,iterations=200,initial_guess=20.0,posteri_estimate=4.0,plot=True):
 		# intial parameters
 		self.n_iter = iterations  # How many iterations to create test data
 		sz = (self.n_iter,) # size of array
@@ -46,14 +46,14 @@ class KalmanFilter:
 
 		print("Took %s seconds" % (time.time() - start))
 
-		#print "Noisy data: "
-		#print self.z 
+		print "Noisy data: "
+		print self.z 
 
-		#print "Estimates:"
-		#print self.xhat
+		print "Estimates:"
+		print self.xhat
 
-		#print "Truth Value:"
-		#print self.x
+		print "Truth Value:"
+		print self.x
 
 		#print "Error estimate"
 		#print self.P
