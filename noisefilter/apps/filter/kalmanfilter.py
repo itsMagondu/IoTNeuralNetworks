@@ -4,12 +4,16 @@ import matplotlib.pyplot as plt
 import time
 
 class KalmanFilter:
-	def __init__(self,base_value=24,iterations=200,initial_guess=20.0,posteri_estimate=4.0,plot=True):
+	def __init__(self,base_value=24,iterations=200,initial_guess=20.0,posteri_estimate=4.0,data=[],plot=False):
 		# intial parameters
 		self.n_iter = iterations  # How many iterations to create test data
 		sz = (self.n_iter,) # size of array
 		self.x = base_value # This is the base value that shall be used to create noisy data. It is the true value
-		self.z = np.random.normal(self.x,1,size=sz) # observations (normal about x, sigma=0.1)
+		if len(data) == 0:
+			self.z = np.random.normal(self.x,1,size=sz) # observations (normal about x, sigma=0.1)
+		else:
+			self.z = data
+
 
 		self.Q = 1e-5 # process variance
 
@@ -59,9 +63,11 @@ class KalmanFilter:
 		#print self.P
 
 		if self.plot:
-			self.plot_results()
+			plt = self.plot_results()
+		else:
+			plt  = None
 
-		return self.z, self.xhat, self.x
+		return self.z, self.xhat, self.x, plt
 
 	def plot_results(self):
 		plt.rcParams['figure.figsize'] = (10, 8)
@@ -74,11 +80,5 @@ class KalmanFilter:
 		plt.xlabel('Iteration')
 		plt.ylabel('Temperature')
 
-		#plt.figure()
-		#valid_iter = range(1,self.n_iter) # Pminus not valid at step 0
-		#plt.plot(valid_iter,self.Pminus[valid_iter],label='a priori error estimate')
-		#plt.title('Estimated $\it{\mathbf{a \ priori}}$ error vs. iteration step', fontweight='bold')
-		#plt.xlabel('Iteration')
-		#plt.ylabel('$(Temparature)^2$')
-		#plt.setp(plt.gca(),'ylim',[0,.01])
-		plt.show()
+		return plt
+		#plt.show()

@@ -4,12 +4,16 @@ import matplotlib.pyplot as plt
 import time
 
 class KalmanFilter:
-	def __init__(self,base_value=24,iterations=200,initial_guess=20.0,posteri_estimate=4.0,plot=True):
+	def __init__(self,base_value=24,iterations=200,initial_guess=20.0,posteri_estimate=4.0,data=[],plot=False):
 		# intial parameters
 		self.n_iter = iterations  # How many iterations to create test data
 		sz = (self.n_iter,) # size of array
 		self.x = base_value # This is the base value that shall be used to create noisy data. It is the true value
-		self.z = np.random.normal(self.x,1,size=sz) # observations (normal about x, sigma=0.1)
+		if len(data) == 0:
+			self.z = np.random.normal(self.x,1,size=sz) # observations (normal about x, sigma=0.1)
+		else:
+			self.z = data
+
 
 		self.Q = 1e-5 # process variance
 

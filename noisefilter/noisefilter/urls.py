@@ -18,8 +18,8 @@ sitemaps = {
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'', include('base.urls')),
-
+    url(r'', include('filter.urls')),
+    url(r'base', include('base.urls')),
     # Admin
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
