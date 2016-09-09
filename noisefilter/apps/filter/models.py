@@ -36,3 +36,22 @@ class ANNConfiguration(models.Model):
 class TrainingExample(models.Model):
     dataoutput = models.FloatField(null=True, blank=True)
     datainput = models.FloatField(null=True, blank=True)
+
+class AnnResult(models.Model):
+    prediction = models.FloatField(null=True, blank=True)
+    epochs = models.IntegerField(null=True, blank=True)
+    seconds = models.IntegerField(null=True, blank=True)
+    hidden_layer_size = models.IntegerField(null=True, blank=True)
+    truevalue = models.FloatField(null=True, blank=True)
+
+    added = models.DateTimeField(auto_now_add=True)
+
+
+class KalmanResult(models.Model):
+    prediction = models.FloatField(null=True, blank=True)
+    iterations = models.IntegerField(null=True, blank=True)
+    seconds = models.IntegerField(null=True, blank=True)
+    initial_guess = models.IntegerField(null=True, blank=True)
+    truevalue = models.FloatField(null=True, blank=True)
+
+    added = models.DateTimeField(auto_now_add=True)

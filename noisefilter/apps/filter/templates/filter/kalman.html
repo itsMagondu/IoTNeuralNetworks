@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>Welcome, this is the filter application. Project by <code>Magondu Njenga</code></p>
+    <div id='container'>
+    	<div id='row'>
+    		<h4>Kalman Filter Chart</h4>
+    		<div id='chart2'></div>	
+    	</div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript">
+    var filter = 'kalman'
+	var true_value = {{base_value}};
+	var estimates = {{predictions}};
+
+</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>Welcome, this is the filter application. Project by <code>Magondu Njenga</code></p>
+    <div id='container'>
+    	<div id='row'>
+    		<h4>Neural Network Chart</h4>
+    		<div id='chart'></div>	
+    		<div id='chart1'></div>	
+    	</div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript">
+    var filter = 'ann'
+	var ep_tests = {{epoch_tests}};
+	var ep_pred = {{epoch_predictions}};
+
+	var ly_tests = {{layer_tests}};
+	var ly_pred = {{layer_predictions}};
+</script>
+{% endblock %}

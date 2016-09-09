@@ -78,11 +78,6 @@ class NeuralNetwork:
                 layer = np.atleast_2d(a[i])
                 delta = np.atleast_2d(deltas[i])
                 self.weights[i] += learning_rate * layer.T.dot(delta)
-        
-        #print "Printing a and weights"
-        #print a
-        #print self.weights
-        #print "Done printing"
 
     def predict(self, x):
         x = np.array(x)
