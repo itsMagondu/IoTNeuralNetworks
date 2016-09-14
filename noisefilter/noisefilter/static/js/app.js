@@ -51,6 +51,13 @@ var est = {
   name: 'Estimate',
 };
 
+var noisyd = {
+  y: noisydata,
+  mode: 'lines',
+  type: 'scatter',
+  name: 'Noisy Data',
+};
+
 var trueline = {
   x: [0, estimates.length],
   y: [true_value, true_value],
@@ -59,7 +66,8 @@ var trueline = {
   name: 'True Value',
 };
 
-var data2 = [ est, trueline ];
+
+var data2 = [ est, trueline, noisyd ];
 
 var layout2 = {
 	  yaxis: {
@@ -68,5 +76,5 @@ var layout2 = {
 	  title:'Kalman Testing'
 	};
 
-Plotly.newPlot('chart2', data2, layout1);
+Plotly.newPlot('chart2', data2, layout2);
 }

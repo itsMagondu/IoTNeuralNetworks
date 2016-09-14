@@ -12,13 +12,13 @@ from fabric.operations import _prefix_commands, _prefix_env_vars, sudo
 DJANGO_SERVER_RESTART = False
 
 # EDIT THIS INFORMATION
-env.hosts = ['']
+env.hosts = ['127.0.0.1']
 env.password = ''
 env.code_dir = ''
 env.project_dir = ''
 env.static_root = ''
-env.virtualenv = ''
-env.code_repo = ''
+env.virtualenv = 'ann'
+env.code_repo = '/IoTNeuralNetworks'
 env.django_settings_module = ''
 
 # Python version

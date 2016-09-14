@@ -66,6 +66,7 @@ class KalmanView(TemplateView):
         args = {}
         args['base_value'] = base_value
         args['predictions'] = list(estimate)
+        args['noisy_data'] = list(iteration_data)
 
         return render(request, self.template_name, args)
         #return JsonResponse({'estimate': estimate[len(estimate)-1], 'truth': truth})
@@ -78,7 +79,7 @@ class ANNView(TemplateView):
 
     def get(self,request, *args, **kwargs):
         hidden_layer = request.GET.get('layers',3)
-        base_value = request.GET.get('base_value',20)
+        base_value = request.GET.get('base_value',20) #Should not be passed. Should be stored in DB
         learning_rate = request.GET.get('lrate',2)
         epochs = request.GET.get('epochs',50000)
         predict = request.GET.get('predict',19)

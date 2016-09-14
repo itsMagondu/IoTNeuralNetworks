@@ -1,19 +1,60 @@
-{% extends 'base.html' %}
+{% extends 'base3.html' %}
 
 {% block content %}
-    <p>Welcome, this is the filter application. Project by <code>Magondu Njenga</code></p>
-    <div id='container'>
-    	<div id='row'>
-    		<h4>Kalman Filter Chart</h4>
-    		<div id='chart2'></div>	
-    	</div>
-    </div>
+<div class="collapse navbar-collapse">
+    <h4>Kalman Filter Testing Parameters</h4>
+    <ul class="nav navbar-nav navbar-left">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-move"></i>
+                <b class="caret"></b>
+                <span class="notification">Iterations</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#">50</a></li>
+                <li><a href="#">100</a></li>
+                <li><a href="#">500</a></li>
+                <li><a href="#">1000</a></li>
+                <li><a href="#">5000</a></li>
+                <li><a href="#">10000</a></li>
+                <li><a href="#">20000</a></li>
+                <li><a href="#">30000</a></li>
+                <li><a href="#">40000</a></li>             
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-move"></i>
+                <b class="caret"></b>
+                <span class="notification">Save Results?</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#">No</a></li>
+                <li><a href="#">Yes</a></li>            
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="#">
+                Run
+            </a>
+        </li>
+    </ul>
+</div>
+<div id='container'>
+   <div id='row'>
+      <h4>Kalman Filter Chart</h4>
+      <div id='chart2'></div>	
+  </div>
+</div>
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
     var filter = 'kalman'
 	var true_value = {{base_value}};
 	var estimates = {{predictions}};
+    var noisydata = {{noisy_data}};
 
 </script>
 {% endblock %}
