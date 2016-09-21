@@ -84,6 +84,7 @@ class ANNView(TemplateView):
         epochs = request.GET.get('epochs',50000)
         predict = request.GET.get('predict',19)
         test = request.GET.get('test',False)
+        dataformat = request.GET.get('format','html')
 
         epochs = checkIfInt(epochs)
         if not epochs:
@@ -159,8 +160,10 @@ class ANNView(TemplateView):
         args['layer_tests'] = layer_tests
         args['layer_predictions'] = layer_predictions
 
-        return render(request, self.template_name, args)
-
+        if dataformat == 'html':
+            return render(request, self.template_name, args)
+        else:
+            return JsonResponse(args)            
 
     def scale_to_binary(self, value):
         return neuralnetwork._scale_to_binary(value, self.minValue, self.maxValue)

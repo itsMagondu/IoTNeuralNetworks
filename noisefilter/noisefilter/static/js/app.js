@@ -1,5 +1,12 @@
 if (filter == 'ann'){
-	var layers = {
+createannchart()
+}
+else  if(filter == 'kalman'){
+createkalmanchart()
+}
+
+function createannchart() {
+    var layers = {
 	  x: ly_tests,
 	  y: ly_pred,
 	  mode: 'markers',
@@ -43,8 +50,9 @@ if (filter == 'ann'){
 	Plotly.newPlot('chart', data, layout);
 	Plotly.newPlot('chart1', data1, layout1);	
 }
-else  if(filter == 'kalman'){
-var est = {
+
+function createkalmanchart() {
+	var est = {
   y: estimates,
   mode: 'lines',
   type: 'scatter',
