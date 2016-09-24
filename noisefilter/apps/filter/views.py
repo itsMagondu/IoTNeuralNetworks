@@ -28,6 +28,7 @@ class KalmanView(TemplateView):
         predict = request.GET.get('predict',19)
         error_estimate = request.GET.get('predict',4)
         test = request.GET.get('test',False)
+        dataformat = request.GET.get('format','html')
 
         base_value = checkIfInt(base_value)
         if not base_value:
@@ -68,8 +69,10 @@ class KalmanView(TemplateView):
         args['predictions'] = list(estimate)
         args['noisy_data'] = list(iteration_data)
 
-        return render(request, self.template_name, args)
-        #return JsonResponse({'estimate': estimate[len(estimate)-1], 'truth': truth})
+        if dataformat == 'html':
+            return render(request, self.template_name, args)
+        else:
+            return JsonResponse(args)
 
 
 class ANNView(TemplateView):

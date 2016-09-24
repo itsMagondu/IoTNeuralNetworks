@@ -6,37 +6,37 @@
     <ul class="nav navbar-nav navbar-left">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-move"></i>
+                <i class="fa fa-move">Iterations</i>
                 <b class="caret"></b>
-                <span class="notification">Iterations</span>
+                <span class="notification" id="iterations"> 50</span>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="#">50</a></li>
-                <li><a href="#">100</a></li>
-                <li><a href="#">500</a></li>
-                <li><a href="#">1000</a></li>
-                <li><a href="#">5000</a></li>
-                <li><a href="#">10000</a></li>
-                <li><a href="#">20000</a></li>
-                <li><a href="#">30000</a></li>
-                <li><a href="#">40000</a></li>             
+                <li><a href="#" onclick='selectIterations(50)'>50</a></li>
+                <li><a href="#" onclick='selectIterations(100)''>100</a></li>
+                <li><a href="#" onclick='selectIterations(500)'>500</a></li>
+                <li><a href="#" onclick='selectIterations(1000)'>1000</a></li>
+                <li><a href="#" onclick='selectIterations(5000)'>5000</a></li>
+                <li><a href="#" onclick='selectIterations(10000)'>10000</a></li>
+                <li><a href="#" onclick='selectIterations(20000)'>20000</a></li>
+                <li><a href="#" onclick='selectIterations(30000)'>30000</a></li>
+                <li><a href="#" onclick='selectIterations(40000)'>40000</a></li>             
             </ul>
         </li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-move"></i>
+            <i class="fa fa-move">Save Results?</i>
                 <b class="caret"></b>
-                <span class="notification">Save Results?</span>
+                <span class="notification" id='save'> False</span>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="#">No</a></li>
-                <li><a href="#">Yes</a></li>            
+                <li><a href="#" onclick='selectSave("False")'>False</a></li>
+                <li><a href="#" onclick='selectSave("True")'>True</a></li>           
             </ul>
         </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a href="#">
+            <a href="#" id='run'>
                 Run
             </a>
         </li>
@@ -55,6 +55,37 @@
 	var true_value = {{base_value}};
 	var estimates = {{predictions}};
     var noisydata = {{noisy_data}};
+    var iterations = 50
+    var save = 'False'
+    
+    function selectIterations(value) {
+        $('#iterations').html(value);
+        iterations = value;
+    }
+
+    function selectSave(value) {
+        $('#save').html(value);
+        save = value
+    }
+
+    $("#run").click(function() {
+    url  = '{% url 'kalman' %}?iterations='+iterations+'&test='+save+'&format=json'
+    $.ajax({
+    url: url,
+    type: 'get', // This is the default though, you don't actually need to always mention it
+    success: function(data) {
+        console.log(data);
+        estimates = data.predictions
+        noisydata = data.noisy_data
+        true_value = data.base_value
+
+        createkalmanchart();
+    },
+    failure: function(data) { 
+        alert('Got an error dude');
+    }
+    }); 
+    });
 
 </script>
 {% endblock %}
