@@ -13,9 +13,6 @@ def logistic(x):
 def logistic_derivative(x):
     return logistic(x)*(1-logistic(x))
 
-def ReLU(x):
-    return x * (x > 0)
-
 def _scale_to_binary(e, minV, maxV):
     result = ((e-minV)/(maxV-minV))*(1-0)+0
     return result

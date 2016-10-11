@@ -26,7 +26,7 @@ class KalmanView(TemplateView):
         base_value = request.GET.get('base_value',20)
         iterations = request.GET.get('iterations',50)
         predict = request.GET.get('predict',19)
-        error_estimate = request.GET.get('predict',4)
+        error_estimate = request.GET.get('estimate',4)
         test = request.GET.get('test',False)
         dataformat = request.GET.get('format','html')
 
@@ -84,6 +84,7 @@ class ANNView(TemplateView):
         hidden_layer = request.GET.get('layers',3)
         base_value = request.GET.get('base_value',20) #Should not be passed. Should be stored in DB
         learning_rate = request.GET.get('lrate',2)
+        function = request.GET.get('function','tanh')
         epochs = request.GET.get('epochs',50000)
         predict = request.GET.get('predict',19)
         test = request.GET.get('test',False)
@@ -107,7 +108,7 @@ class ANNView(TemplateView):
         layers = [1,hidden_layer,1]
 
         y = [base_value]* len(examples)
-        n = neuralnetwork.NeuralNetwork(layers)
+        n = neuralnetwork.NeuralNetwork(layers,function)
 
         scaled_x = []
         scaled_y = []
