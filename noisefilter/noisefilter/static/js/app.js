@@ -32,7 +32,7 @@ function createannchart() {
 	    range: [ 0, 10 ]
 	  },
 	  yaxis: {
-	    range: [19.95, 20.05]
+	    range: [18, 22]
 	  },
 	  title:'Neural Network Testing: Layers'
 	};
@@ -42,7 +42,7 @@ function createannchart() {
 	    range: [ 4000, 111000 ]
 	  },
 	  yaxis: {
-	    range: [19.90, 20.05]
+	    range: [18, 22]
 	  },
 	  title:'Neural Network Testing: Epochs'
 	};
