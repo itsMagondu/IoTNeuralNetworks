@@ -48,6 +48,7 @@ class AnnResult(models.Model):
     seconds = models.IntegerField(null=True, blank=True)
     hidden_layer_size = models.IntegerField(null=True, blank=True)
     truevalue = models.FloatField(null=True, blank=True)
+    function = models.CharField(max_length=20, default='',null=True, blank=True)
 
     added = models.DateTimeField(auto_now_add=True)
 

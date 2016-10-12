@@ -146,7 +146,8 @@ class ANNView(TemplateView):
                                      epochs=epochs,
                                      hidden_layer_size=hidden_layer,
                                      seconds=seconds,
-                                     truevalue=correct_list[99])
+                                     truevalue=correct_list[99],
+                                     function=function,)
 
         results = AnnResult.objects.all()
         def_epoch = 50000
