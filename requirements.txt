@@ -4,7 +4,7 @@ cycler==0.10.0
 Django==1.11.29
 docutils==0.12
 imagesize==0.7.1
-Jinja2==2.8
+Jinja2==2.11.3
 MarkupSafe==0.23
 matplotlib==1.5.1
 numpy==1.11.1
