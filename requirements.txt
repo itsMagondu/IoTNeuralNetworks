@@ -7,7 +7,7 @@ imagesize==0.7.1
 Jinja2==2.11.3
 MarkupSafe==0.23
 matplotlib==1.5.1
-numpy==1.11.1
+numpy==1.21.0
 Pygments==2.7.4
 pyparsing==2.1.5
 python-dateutil==2.5.3
